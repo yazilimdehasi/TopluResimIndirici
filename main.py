@@ -4,6 +4,7 @@ from urllib import request as ulreq
 from PIL import ImageFile
 import ssl
 from tqdm import tqdm
+import os
 
 def getImageSize(url):
     try:
@@ -49,7 +50,6 @@ def getImageUrls(url):
 
 
 if __name__ == "__main__":
-    import os
     if not os.path.exists('imgs'):
         os.makedirs('imgs')
 
