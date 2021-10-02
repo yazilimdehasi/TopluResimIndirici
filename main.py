@@ -49,6 +49,10 @@ def getImageUrls(url):
 
 
 if __name__ == "__main__":
+    import os
+    if not os.path.exists('imgs'):
+        os.makedirs('imgs')
+
     url = input("Enter the URL to download images from : ")
 
     images = getImageUrls(url)
