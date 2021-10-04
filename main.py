@@ -42,10 +42,23 @@ def getImageUrls(url):
     """
     Get image urls from a webpage.
     """
-    response = requests.get(url)
+
+    # User agent to validate that the request is made from the browser
+    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'} 
+    
+    response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.text, 'html.parser')
     image_tags = soup.find_all('img')
-    image_urls = [tag['src'] for tag in image_tags]
+
+    image_urls = []
+    for image_tag in image_tags:
+
+        # to ensure that it doesn't throw an error on links without src field
+        try:
+            image_urls.append(image_tag['src'])
+        except KeyError as keyError:
+            continue
+
     return image_urls
 
 
@@ -56,7 +69,7 @@ if __name__ == "__main__":
     url = input("Enter the URL to download images from : ")
 
     images = getImageUrls(url)
-
+    
     count = 1
     for i in tqdm(range(len(images))):
         image = images[i]
